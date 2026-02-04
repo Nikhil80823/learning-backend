@@ -4,13 +4,27 @@ import dotenv from "dotenv"
 import mongoose from "mongoose";
 import { DB_NAME } from "./constants.js";
 import connectDB from "./db/index.js";
+import { app } from "./app.js";
 
 dotenv.config({
   path: "/chai_backend/.env"
 })
+const port = process.env.PORT || 8000;
 
 
 connectDB()
+.then(() => {
+  app.on("error",(error) =>{
+    console.log("ERR: ", error);
+    throw error
+  })
+  app.listen(port, () =>{
+    console.log(`Server is running at port ${port}`)
+  })
+})
+.catch((err) =>{
+  console.log("MONGO db Connection Failed !!!", err)
+})
 
 
 
