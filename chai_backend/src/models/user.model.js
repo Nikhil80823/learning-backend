@@ -54,6 +54,8 @@ const userSchema = new mongoose.Schema(
 
   // middleware encrypting password
 userSchema.pre("save", async function (next) {
+  // this ensures only if password is changed then it is updated because pre hook run everytime someone change or modify something
+  
   if(!this.isModified("password")){
     return next();
   }
