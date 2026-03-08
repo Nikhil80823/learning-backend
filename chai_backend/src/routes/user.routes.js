@@ -5,6 +5,7 @@ import {upload} from "../middlewares/multer.middleware.js"
 const router = Router()
 
 router.route("/register").post(
+  //fields take array and in it we can give two object since we have 2 fields
   upload.fields([
     {
       name: "avatar",

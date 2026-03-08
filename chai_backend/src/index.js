@@ -7,7 +7,7 @@ import connectDB from "./db/index.js";
 import { app } from "./app.js";
 
 dotenv.config({
-  path: "/chai_backend/.env"
+  path: "./.env"
 })
 const port = process.env.PORT || 8000;
 
