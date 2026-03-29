@@ -7,7 +7,7 @@ import jwt from "jsonwebtoken"
 
 
 
-const generateAcessAndRefreshTokens = async(userId) => {
+const generateAccessAndRefreshTokens = async(userId) => {
   try {
     // find user on the basis of ID
     const user = await User.findById(userId)
@@ -198,6 +198,7 @@ const refreshAccessToken = asyncHandler(async(req,res) => {
   }
 
   try {
+    // verifying if it is signed using our secret key, is authentic and give decoded token. it is not important that there will always be payload in decoded token. decoded data will contain the id which will help us find the user and get its refresh token from DB 
     const decodedToken = jwt.verify(
       incomingRefreshToken,process.env.REFRESH_TOKEN_SECRET
     )
@@ -216,16 +217,16 @@ const refreshAccessToken = asyncHandler(async(req,res) => {
       secure: true,
     }
   
-    const {accessToken, newrefreshToken} = await generateAcessAndRefreshTokens(user._id)
+    const {accessToken, newRefreshToken} = await generateAccessAndRefreshTokens(user._id)
   
     return res
     .status(200)
     .cookie("accessToken",accessToken ,options)
-    .cookie("refreshToken", newrefreshToken, options)
+    .cookie("refreshToken", newRefreshToken, options)
     .json( 
       new ApiResponse(
         200,
-        {accessToken, refreshToken: newrefreshToken},
+        {accessToken, refreshToken: newRefreshToken},
         "Access token refreshed"
       )
     )
