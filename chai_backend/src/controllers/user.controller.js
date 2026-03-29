@@ -4,6 +4,8 @@ import {User} from "../models/user.model.js"
 import {uploadOnCloudinary} from "../utils/cloudinary.js"
 import {ApiResponse} from '../utils/ApiResponse.js'
 
+
+
 const generateAcessAndRefreshTokens = async(userId) => {
   try {
     // find user on the basis of ID
@@ -119,7 +121,7 @@ const loginUser = asyncHandler(async(req, res) => {
   const {email, username, password} = req.body
 
   // if they are not available
-  if(!username || !email){
+  if(!username && !email){
     throw new ApiError(400, "username or email is required")
   }
 
